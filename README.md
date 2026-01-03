@@ -12,6 +12,7 @@ The gradient descent update rule:
 
 Here, α is the learning rate, which determines the size of our steps in the descent. X<sup>T</sup> is the transpose of the data. Note, that it should have been multiplied by 2, as we take the derivative of a the mean squared error, but we can ignore this 2 and just consider it as a part of the learning rate coefficient.
 
-Sigmoid: <img width="187" height="51" alt="image" src="https://github.com/user-attachments/assets/34dbccfe-73cd-4568-a6eb-02e3da530454" />
+Sigmoid: 
+<img width="187" height="51" alt="image" src="https://github.com/user-attachments/assets/34dbccfe-73cd-4568-a6eb-02e3da530454" />
 
 
