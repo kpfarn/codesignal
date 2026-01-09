@@ -1,1 +1,12 @@
+# TODO: Define a function to compute AUCROC using the Trapezoidal rule based on lists of TPRs and FPRs
+def aucroc(tprs, fprs):
+    aucroc = 0
+    for i in range(1, len(tprs)):
+        aucroc += .5 * abs(fprs[i] - fprs[i - 1]) * (tprs[i] + tprs[i - 1])
+    return aucroc
+# These lists would normally be obtained by running a function calculating TPRs and FPRs at various thresholds
+tprs = [0, 0.33, 0.67, 1, 1]  # True Positive Rates
+fprs = [0, 0.25, 0.5, 0.75, 1]  # False Positive Rates
 
+# TODO: Use your function to compute AUCROC and print the result
+print(aucroc(tprs, fprs))
