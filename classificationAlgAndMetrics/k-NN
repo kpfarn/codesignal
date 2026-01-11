@@ -2,6 +2,7 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 
+# k-Nearest Neighbors
 
 def k_nearest_neighbors(data, query, k, distance_fn):
     neighbor_distances_and_indices = []
