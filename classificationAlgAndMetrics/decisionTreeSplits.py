@@ -24,9 +24,15 @@ def get_split(dataset):
     for index in range(len(dataset[0])-1):
         for row in dataset:
             # TODO: call the test_split function to get groups
+            groups = test_split(index, row[index], dataset)
             # TODO: calculate the gini index using the gini_index function
+            gini = gini_index(groups, class_values)
             if gini < b_score:
                 # TODO: update best index, best value, best score and best groups
+                b_index = index
+                b_value = row[index]
+                b_score = gini
+                b_groups = groups
     return {'index': b_index, 'value': b_value, 'groups': b_groups}
 
 # Dataset: Age, Preferred Genre, Likelihood to Watch
