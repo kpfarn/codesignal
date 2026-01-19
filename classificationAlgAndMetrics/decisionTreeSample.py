@@ -1,8 +1,3 @@
-# Function for getting the majority class for creating a terminal node
-def create_terminal(group):
-    outcomes = [row[-1] for row in group]
-    return max(set(outcomes), key=outcomes.count)
-
 # Select the best split point for a dataset
 def get_split(dataset):
     class_values = list(set(row[-1] for row in dataset))
@@ -40,31 +35,41 @@ def gini_index(groups, classes):
         gini += (1.0 - score) * (size / n_instances)
     return gini
 
-# Recursive function to create child splits or make terminal
-def split(node, max_depth, min_size, depth):
+
+def create_terminal(group):
+    #TODO : Fill in this function to find the most common
+    outcomes = [row[-1] for row in group]
+    return max(set(outcomes), key=outcomes.count)
+
+def build_tree(train, max_depth, min_size):
+    root = get_split(train)
+    recurse_split(root, max_depth, min_size, 1)
+    return root
+
+def recurse_split(node, max_depth, min_size, depth):
     left, right = node['groups']
     del(node['groups'])
-    if not left or not right or depth >= max_depth:
+    
+    # TODO: Handle the case if either left or right group is empty.
+    if not left or not right:
         node['left'] = node['right'] = create_terminal(left + right)
         return
+    # TODO: Handle the case if the current depth has reached or exceeded the maximum depth.
+    if depth >= max_depth:
+        node['left'], node['right'] = create_terminal(left), create_terminal(right)
+    # TODO: Process the left group, call `create_terminal` or `get_split` method based on group size. Implement recursion if necessary.
     if len(left) <= min_size:
         node['left'] = create_terminal(left)
     else:
         node['left'] = get_split(left)
-        split(node['left'], max_depth, min_size, depth+1)
+        recurse_split(node['left'], max_depth, min_size, depth+1)
+    # TODO: Process the right group, call `create_terminal` or `get_split` method based on group size. Implement recursion if necessary.
     if len(right) <= min_size:
         node['right'] = create_terminal(right)
     else:
         node['right'] = get_split(right)
-        split(node['right'], max_depth, min_size, depth+1)
-
-# Build a decision tree
-def build_tree(train, max_depth, min_size):
-    root = get_split(train)
-    split(root, max_depth, min_size, 1)
-    return root
-
-# Function to print a decision tree recursively
+        recurse_split(node['right'], max_depth, min_size, depth+1)
+        
 def print_tree(node, depth=0):
     if isinstance(node, dict):
         print('%s[X%d < %.3f]' % ((depth*' ', (node['index']+1), node['value'])))
@@ -73,18 +78,12 @@ def print_tree(node, depth=0):
     else:
         print('%s[%s]' % ((depth*' ', node)))
 
-# Test building a tree with recursive functions
-dataset = [[2.771244718,1.784783929,0],
-           [1.728571309,1.169761413,0],
-           [3.678319846,2.81281357,0],
-           [3.961043357,2.61995032,0],
-           [2.999208922,2.209014212,0],
-           [7.497545867,3.162953546,1],
-           [9.00220326,3.339047188,1],
-           [7.444542326,0.476683375,1],
-           [10.12493903,3.234550982,1],
-           [6.642287351,3.319983761,1]]
-max_depth = 3
+# Sample dataset
+dataset = [
+    [5, 3, 0], [6, 3, 0], [6, 4, 0], [10, 3, 1],
+    [11, 4, 1], [12, 8, 0], [5, 5, 0], [12, 4, 1]
+]
+max_depth = 2
 min_size = 1
 tree = build_tree(dataset, max_depth, min_size)
 print_tree(tree)
