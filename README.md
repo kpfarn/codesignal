@@ -16,4 +16,7 @@ Sigmoid:
 
 <img width="187" height="51" alt="image" src="https://github.com/user-attachments/assets/34dbccfe-73cd-4568-a6eb-02e3da530454" />
 
+Stochastic Gradient Descent:
+
+<img width="612" height="448" alt="image" src="https://github.com/user-attachments/assets/fa622bee-948e-4186-b213-0691477d53c4" />
 
