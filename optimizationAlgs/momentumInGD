@@ -1,1 +1,40 @@
+import matplotlib.pyplot as plt
+import numpy as np
 
+# Function defining the simple quadratic cost function
+def func(x):   
+    return x**2
+
+# Function defining the derivative of the cost function
+def grad_func(x): 
+    return 2*x
+
+alpha = 0.5  # Momentum coefficient
+learning_rate = 0.01
+momentum = 0
+epochs = 50
+
+theta_plain = 4.0
+theta_momentum = 4.0
+
+history_plain = []
+history_momentum = []
+
+for _ in range(epochs):
+    history_plain.append(theta_plain)
+    gradient = grad_func(theta_plain)
+    theta_plain = theta_plain - learning_rate * gradient
+    
+    history_momentum.append(theta_momentum)
+    gradient = grad_func(theta_momentum)
+    momentum = alpha * momentum + learning_rate * gradient
+    theta_momentum = theta_momentum - momentum
+
+plt.figure(figsize=(12, 7))
+plt.plot([func(theta) for theta in history_plain], label='Gradient Descent')
+plt.plot([func(theta) for theta in history_momentum], label='Momentum-based Gradient Descent with Alpha = 0.9')
+plt.xlabel('Epoch')
+plt.ylabel('Cost')
+plt.legend()
+plt.grid()
+plt.show()
