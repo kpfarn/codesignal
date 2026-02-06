@@ -1,1 +1,29 @@
+import numpy as np
 
+# Define the RMSProp optimization function
+def RMSProp(learning_rate, rho, epsilon, grad, s_prev):
+    s = rho * s_prev + (1 - rho) * np.power(grad, 2)
+    updates = learning_rate * grad / (np.sqrt(s) + epsilon)
+    return updates, s
+
+# Define the target function and its gradient
+def f(x, y):
+    return (x-3)**2 + (y+1)**2
+def df(x, y):
+    return np.array([2 * x - 6 , 2 * y + 2])
+
+# Initialize parameters and apply RMSProp to optimize the function
+coordinates = np.array([5.0, 4.0])
+learning_rate = 0.1  # Try different values for learning_rate
+rho = 0.9  # Try different values for rho
+epsilon = 1e-6  # Try different values for epsilon
+max_epochs = 100
+s_prev = np.array([0, 0])
+
+# Perform optimization using RMSProp
+for epoch in range(max_epochs + 1):
+    grad = df(coordinates[0], coordinates[1])
+    updates, s_prev = RMSProp(learning_rate, rho, epsilon, grad, s_prev)
+    coordinates -= updates
+    if epoch % 20 == 0:
+        print(f"Epoch {epoch}, current state: {coordinates}")
