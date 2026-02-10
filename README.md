@@ -20,3 +20,4 @@ Stochastic Gradient Descent:
 
 <img width="612" height="448" alt="image" src="https://github.com/user-attachments/assets/fa622bee-948e-4186-b213-0691477d53c4" />
 
+ADAM is usually the preferred choice. It takes the good from momentum and RMSProp. Though not perfect, it is usually the right choice for optimization.
